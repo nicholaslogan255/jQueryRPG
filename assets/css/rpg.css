@@ -1,0 +1,30 @@
+body{
+    background-image: url("../images/hoth.jpg");
+}
+
+#title{
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    height: 50px;   
+    font-weight: bolder;
+    text-align: center;
+}
+
+#mainBody{
+    background-color: gray;
+    opacity: .3;
+    width: 80%;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+}
+
+.box{
+    opacity: .9;
+    margin: 20px;
+    background-color: white;
+    padding: 20px;
+}
