@@ -5,11 +5,14 @@ var playerName = "Luke Skywalker"
 var playerExperience = 0;
 
 
-var enemyMaxHp = 10;
-var enemycurHp = 10;
-var enemyAttack = 4;
+var enemyMaxHp = -1;
+var enemycurHp = -1;
+var enemyAttack = -1;
+var enemyName = "-1";
 
 var message = "";
+
+var inBattle = false;
 
 var map = 1;
 
@@ -33,14 +36,15 @@ $(document).ready(function () {
         else {
             // move north
             ypos++;
-            message = "You travel northwards"
+            message = "You travel northwards. "
 
             // try to spawn random enemy encounter
             battleEncounter();
 
         }
 
-        // log position
+        if(!inBattle){
+            // log position
         console.log("Current pos| X: " + xpos + ", Y: " + ypos);
 
         // check for town
@@ -48,6 +52,10 @@ $(document).ready(function () {
 
         // update DOM
         $("#mainText").text(message);
+
+        }
+
+        
 
     });
 
@@ -84,8 +92,8 @@ $(document).ready(function () {
     $("#eastB").on("click", function () {
         console.log("eastB clicked");
 
-         // if at eastern border
-         if (xpos >=9) {
+        // if at eastern border
+        if (xpos >= 9) {
             message = "To the east is the large Lyroth Mountain. You can not move east any further. "
         }
         else {
@@ -112,8 +120,8 @@ $(document).ready(function () {
     $("#westB").on("click", function () {
         console.log("westB clicked");
 
-         // if at eastern border
-         if (xpos <=1) {
+        // if at eastern border
+        if (xpos <= 1) {
             message = "To the west is the Ten Mile Plateau. You can not move west any further. "
         }
         else {
@@ -155,12 +163,8 @@ $(document).ready(function () {
             $("#townM").show(); // show in town buttons
             $("#roadM").hide(); // hide on road buttons
 
-
             // update DOM
             $("#mainText").text(message);
-
-
-
 
         }
         // check for home
@@ -195,12 +199,12 @@ $(document).ready(function () {
 
         $("#travelB").show(); // show the travel button
         $("#townM").hide(); // hide in town buttons
-        
+
 
         $("#roadM").show(); // show on road buttons 
 
-         // update DOM
-         $("#mainText").text(message);
+        // update DOM
+        $("#mainText").text(message);
 
 
 
@@ -211,7 +215,7 @@ $(document).ready(function () {
         console.log("restB clicked");
 
         playercurHp = playerMaxHp;
-        message = "You feel well rested."
+        message = "You feel well rested. "
 
         // update DOM
         $("#mainText").text(message);
@@ -223,24 +227,42 @@ $(document).ready(function () {
     $("#travelB").on("click", function () {
         console.log("travelB clicked");
 
-        message = "You board a junky ship with some shady smugglers. But whatever, good enough. We got off the planet. You win!";
+        message = "You board a junky ship with some shady smugglers. But whatever, good enough. We got off the planet. You win! ";
 
         // update DOM
         $("#mainText").text(message);
         $("#townM").hide();
         $("#roadM").hide();
         $("#menuMain").hide();
-        
+
 
     });
 
+    $("#runB").on("click", function () {
+        console.log("runB clicked");
 
+        var rand = Math.floor(Math.random()*5);
+
+
+        // TODO:  running chance to fail based on enemy you 
+        if(rand == 0){
+            message = "Oh no! You were unable to get away!"
+
+        }
+        else{
+            endBattle();
+        }
+
+        
+
+
+    });
 
     function inTown() {
 
         // check for town
         if (xpos == 5 && ypos == 8) {
-            message += "You have reached Mos Eisley"
+            message += "You have reached Mos Eisley. "
 
             $("#enterB").show(); // show the enter button
             return true;
@@ -248,7 +270,7 @@ $(document).ready(function () {
         }
         // check for home
         else if (xpos == 1 && ypos == 1) {
-            message += "You are at your home"
+            message += "You are at your home. "
             $("#enterB").show();// show the enter button
         }
         else { // not by town
@@ -261,41 +283,127 @@ $(document).ready(function () {
     }
 
 
-    function battleEncounter() {
+    function battleEncounter() { // decides if battle and with whom
 
         var roll = Math.floor(Math.random() * 10003); // pick a random number 0 -9999
 
+        // debug
         // console.log("#:" + roll);
+
+
 
         if (roll == 10002) { // spawns emperor (.1% chance)
             console.log("## Spawn The Emperor!");
+
+            enemyMaxHp = 1000;
+            enemycurHp = 1000;
+            enemyAttack = 100;
+            enemyName = "The Galactic Emperor";
+
+            // change enemy image
+            $("#enemyImg").css('content', 'url("assets/images/Emporer.jpg")');
+
+            // start battle
+            battle();
+
+
+
+
         }
         else if (roll == 10001) { // spawns darth vader (.1% chance)
             console.log("## Spawn Darth Vader!");
+
+            enemyMaxHp = 1000;
+            enemycurHp = 1000;
+            enemyAttack = 100;
+            enemyName = "Darth Vader";
+
+            // change enemy image
+            $("#enemyImg").css('content', 'url("assets/images/Emporer.jpg")');
+
+            // start battle
+            battle();
         }
         else if (roll == 10000) { // spawns boba fett (.1% chance)
             console.log("## Spawn Boba Fett!");
+
+            enemyMaxHp = 1000;
+            enemycurHp = 1000;
+            enemyAttack = 100;
+            enemyName = "Boba Fett";
+
+            // change enemy image
+            $("#enemyImg").css('content', 'url("assets/images/Emporer.jpg")');
+
+            // start battle
+            battle();
         }
         else if (roll >= 0 && roll <= 1000) { // spawns jawa (~10% chance)
             console.log("--Spawn Jawa");
+
+            enemyMaxHp = 50;
+            enemycurHp = 50;
+            enemyAttack = 4;
+            enemyName = "Jawa";
+
+            // change enemy image
+            $("#enemyImg").css('content', 'url("assets/images/Jawa.jpg")');
+
+            // start battle
+            battle();
         }
         else if (roll >= 1001 && roll <= 4000) { // spawns womp rat (~40% chance)
             console.log("--Spawn Womp Rat");
+
+            enemyMaxHp = 10;
+            enemycurHp = 10;
+            enemyAttack = 1;
+            enemyName = "Womp Rat";
+
+            // change enemy image
+            $("#enemyImg").css('content', 'url("assets/images/wompRat.jpg")');
+
+            // start battle
+            battle();
         }
         else { // nothing spawns
             console.log("--No Encounter");
         }
 
-        return roll;
-
-
-
-
-
-
+        return roll; // returns what number was chosen (for debug, no other purpose)
     }
 
-    function battle() {
+    function battle() { // show on screen the enemy
+        console.log("-Battle Start");
+
+        inBattle = true;
+
+        $("#roadM").hide(); // hide travel buttons
+        $("#battleM").show(); // show combat buttons
+        $("#enemyBox").show(); // make enemy appear
+
+        message += "An Enemy appeared!"
+
+        // update DOM
+        $("#mainText").text(message);
+        $("#enemyName").text(enemyName);
+        $("#enemyCurHealth").text(enemycurHp);
+        $("#enemyMaxHealth").text(enemyMaxHp);
+    }
+
+    function endBattle() {
+        console.log("-end battle");
+
+        inBattle = false;
+
+        message = "You ran away sucessfully!"
+
+        $("#mainText").text(message); // show text
+        $("#roadM").show(); // show travel buttons
+        $("#battleM").hide(); // hide combat buttons
+        $("#enemyBox").hide(); // make enemy disapper
+
+
 
     }
 
