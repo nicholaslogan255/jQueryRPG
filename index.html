@@ -7,7 +7,7 @@
     <title>RPG - jQuery</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/rpg.css" />
-    <script src="assets/javascript/rpg.js"></script>
+
 
 
     <!-- Added link to the jQuery Library -->
@@ -15,6 +15,9 @@
 
     <!-- Added a link to Bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+
+    <script src="assets/javascript/rpg.js"></script>
 </head>
 
 <body>
@@ -54,15 +57,16 @@
 
         </div>
 
+
+
+        <div class="fullbox" id="mainText">
+            <p>You are at your home on Tatooine. You must find Mos Eisly in order to save the galaxy. </p>
+            <p>Your home is south west of the city, but be careful! Every move you make might result in an enemy encounter.</p>
+            <p>Press the buttons below to move in that direction. Pay attention to where you have gone, otherwise you will get
+                lost!</p>
+
+        </div>
         <div class="fullbox">
-
-            <div id="mainText">
-                <p>You are at your home on Tatooine. You must find Mos Eisly in order to save the galaxy. </p>
-                <p>Your home is south west of the city, but be careful! Every move you make might result in an enemy encounter.</p>
-                <p>Press the buttons below to move in that direction. Pay attention to where you have gone, otherwise you will get lost!</p>
-
-            </div>
-
             <div id="menuMain">
 
                 <span id="battleM">
@@ -82,7 +86,7 @@
                 <span id="townM">
                     <div class="button" id="restB">Rest</div>
                     <div class="button" id="travelB">Travel</div>
-                    <div class="button" id="leaveTownB">Leave</div>
+                    <div class="button" id="leaveB">Leave</div>
                 </span>
 
 
