@@ -8,38 +8,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/rpg.css" />
     <script src="assets/javascript/rpg.js"></script>
+
+
+    <!-- Added link to the jQuery Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Added a link to Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 
 <body>
 
 
 
-    <div id="title">Star Wars RPG</div>
+    <div id="title">
+        <img src="assets/images/SWlogo.png" alt="SWlogo">
+    </div>
     <div id="mainBody">
 
-        <div class="box">
-            Your Character
-            <div id="characters"></div>
+        <div class="fullbox" id="enemyBox">
+
+            <div id="enemyStats">
+                <div id="enemyName">enemyName</div>
+                Health:
+                <span id="enemyCurHealth">10</span> /
+                <span id="enemyMaxHealth">10</span>
+
+
+            </div>
+            <img id="enemyImg"></img>
 
         </div>
 
-        <div class="box">
-            Enemies:
-            <div id="enemies"></div>
+        <div class="fullbox" id="playerBox">
+
+            <img id="playerImg"></img>
+            <div id="playerStats">
+                <div id="playerName">playerName</div>
+                Health:
+                <span id="playerCurHealth">10</span> /
+                <span id="playerMaxHealth">10</span>
+
+            </div>
+
 
         </div>
 
-        <div class="box">
-            Fight:
-            <div id="fight"></div>
+        <div class="fullbox">
+
+            <div id="mainText">Here is the descriptions of what is going on.</div>
+
+            <div id="menuMain">
+
+                <span id="battleM">
+                    <div class="button" id="fghtB">Fight</div>
+                    <div class="button" id="runB">Run</div>
+                </span>
+
+
+                <span id="roadM">
+                    <div class="button" id="northB">North</div>
+                    <div class="button" id="southB">South</div>
+                    <div class="button" id="eastB">East</div>
+                    <div class="button" id="westB">West</div>
+                    <div class="button" id="enterB">Enter Town</div>
+                </span>
+
+                <span id="townM">
+                    <div class="button" id="restB">Rest</div>
+                    <div class="button" id="travelB">Travel</div>
+                    <div class="button" id="leaveTownB">Leave</div>
+                </span>
+
+
+            </div>
 
         </div>
 
-        <div class="box">
-            Defend:
-            <div id="defend"></div>
 
-        </div>
 
 
 

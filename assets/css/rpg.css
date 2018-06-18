@@ -1,30 +1,125 @@
 body{
-    background-image: url("../images/hoth.jpg");
+    background-image: url("../images/tatooine.jpg");
 }
 
 #title{
-    background-color: white;
+    width: 335px;
     margin-left: auto;
-    margin-right: auto;
-    width: 60%;
-    height: 50px;   
-    font-weight: bolder;
-    text-align: center;
+    margin-right: auto;  
 }
 
 #mainBody{
-    background-color: gray;
-    opacity: .3;
-    width: 80%;
-    margin-top: 20px;
+    width: 990px;
+    margin-top: 5px;
     margin-left: auto;
     margin-right: auto;
-    padding: 20px;
+    border-radius: 8px;
+    opacity: .90;
 }
 
-.box{
-    opacity: .9;
-    margin: 20px;
+.fullbox{
+    opacity: .99;
+    z-index: 1;
+    margin: 0;
+    min-height: 150px;
     background-color: white;
-    padding: 20px;
+    overflow: auto;
+    position: relative;
+    line-height: 1.3;
+    padding: 10px;
+
 }
+#enemyStats, #playerStats{
+    border-style: solid;
+    border-width: 2px;
+    position: absolute;   
+    width: 60%;
+    height: 80px;
+    overflow: auto;
+    padding: 10px;
+    background-color: #eee;
+    
+}
+
+#enemyStats{
+left: 10px;
+top: 10px;
+}
+
+#playerStats{
+right: 10px;
+bottom: 10px;
+text-align: right;
+
+}
+
+#enemyName, #playerName{ 
+    font-weight: bold;
+    font-size: 20px;
+  
+}
+#enemyImg, #playerImg{
+    height: 150px;
+    width: 150px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 5px;
+    
+}
+
+#enemyImg{
+    float: right;
+    content:url("../images/Jawa.jpg");
+    
+}
+#playerImg{
+    content:url("../images/luke.jpg");
+}
+
+#menu{
+    top: 0%;
+    border-style: solid;
+    position: relative;
+    
+
+}
+#mainText{
+    /* border-style: solid; */
+    position: relative;
+    height: 50px;
+    text-align: center;
+}
+
+#menuMain{
+    overflow: auto;
+    border-style: hidden;
+}
+
+
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.button:hover {background-color: #3e8e41}
+
+
+#battleM{
+display: none;
+}
+
+#roadM{
+
+}
+#townM{
+    display: none;
+}
+
