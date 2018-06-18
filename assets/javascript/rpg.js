@@ -84,10 +84,56 @@ $(document).ready(function () {
     $("#eastB").on("click", function () {
         console.log("eastB clicked");
 
+         // if at eastern border
+         if (xpos >=9) {
+            message = "To the east is the large Lyroth Mountain. You can not move east any further. "
+        }
+        else {
+            // move east
+            xpos++;
+            message = "You travel eastwards. "
+
+            // try to spawn random enemy encounter
+            battleEncounter();
+
+        }
+
+        // log position
+        console.log("Current pos| X: " + xpos + ", Y: " + ypos);
+
+        // check for town
+        inTown();
+
+        // update DOM
+        $("#mainText").text(message);
+
     });
 
     $("#westB").on("click", function () {
         console.log("westB clicked");
+
+         // if at eastern border
+         if (xpos <=1) {
+            message = "To the west is the Ten Mile Plateau. You can not move west any further. "
+        }
+        else {
+            // move west
+            xpos--;
+            message = "You travel westward. "
+
+            // try to spawn random enemy encounter
+            battleEncounter();
+
+        }
+
+        // log position
+        console.log("Current pos| X: " + xpos + ", Y: " + ypos);
+
+        // check for town
+        inTown();
+
+        // update DOM
+        $("#mainText").text(message);
 
     });
 
@@ -97,7 +143,7 @@ $(document).ready(function () {
         console.log("enterB clicked");
 
         // check for mos eisley
-        if (xpos == 5 && ypos == 9) {
+        if (xpos == 5 && ypos == 8) {
 
             message = "You made it to Mos Eisley.\n You can rest to restore your health to maximum.\n"
 
@@ -147,11 +193,11 @@ $(document).ready(function () {
         $("body").css("background-image", "url('assets/images/tatooine.jpg')");
 
 
-        $("#travelB").show(); // hide the travel button
-        $("#townM").hide(); // show in town buttons
+        $("#travelB").show(); // show the travel button
+        $("#townM").hide(); // hide in town buttons
         
 
-        $("#roadM").show(); // hide on road buttons 
+        $("#roadM").show(); // show on road buttons 
 
          // update DOM
          $("#mainText").text(message);
@@ -174,12 +220,26 @@ $(document).ready(function () {
 
     });
 
+    $("#travelB").on("click", function () {
+        console.log("travelB clicked");
+
+        message = "You board a junky ship with some shady smugglers. But whatever, good enough. We got off the planet. You win!";
+
+        // update DOM
+        $("#mainText").text(message);
+        $("#townM").hide();
+        $("#roadM").hide();
+        $("#menuMain").hide();
+        
+
+    });
+
 
 
     function inTown() {
 
         // check for town
-        if (xpos == 5 && ypos == 9) {
+        if (xpos == 5 && ypos == 8) {
             message += "You have reached Mos Eisley"
 
             $("#enterB").show(); // show the enter button
