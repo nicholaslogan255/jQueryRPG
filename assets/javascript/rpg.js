@@ -1,6 +1,6 @@
 var playerMaxHp = 10;
 var playercurHp = 10;
-var playerAttack = 4;
+var playerAttack = 3;
 var playerName = "Luke Skywalker"
 var playerExperience = 0;
 
@@ -18,6 +18,14 @@ var map = 1;
 
 var xpos = 1;
 var ypos = 1;
+
+
+$("#playerName").text(playerName);
+$("#playerCurHealth").text(playercurHp);
+$("#playerMaxHealth").text(playerMaxHp);
+
+
+
 
 // code runs here
 $(document).ready(function () {
@@ -42,23 +50,24 @@ $(document).ready(function () {
             battleEncounter();
 
         }
-
-        if(!inBattle){
-            // log position
+        // log position
         console.log("Current pos| X: " + xpos + ", Y: " + ypos);
+         // update DOM
+         $("#mainText").text(message);
 
-        // check for town
-        inTown();
+        if (!inBattle) {
+            
 
-        // update DOM
-        $("#mainText").text(message);
+            // check for town
+            inTown();
+
+           
 
         }
 
-        
+
 
     });
-
 
     // try to go south
     $("#southB").on("click", function () {
@@ -81,8 +90,10 @@ $(document).ready(function () {
         // log position
         console.log("Current pos| X: " + xpos + ", Y: " + ypos);
 
-        // check for town
-        inTown();
+        if (!inBattle) {
+            // check for town
+            inTown();
+        }
 
         // update DOM
         $("#mainText").text(message);
@@ -109,9 +120,10 @@ $(document).ready(function () {
         // log position
         console.log("Current pos| X: " + xpos + ", Y: " + ypos);
 
-        // check for town
-        inTown();
-
+        if (!inBattle) {
+            // check for town
+            inTown();
+        }
         // update DOM
         $("#mainText").text(message);
 
@@ -134,17 +146,23 @@ $(document).ready(function () {
 
         }
 
-        // log position
-        console.log("Current pos| X: " + xpos + ", Y: " + ypos);
-
-        // check for town
-        inTown();
-
         // update DOM
         $("#mainText").text(message);
 
-    });
+        // log position
+        console.log("Current pos| X: " + xpos + ", Y: " + ypos);
 
+        if (!inBattle) {
+            // check for town
+            inTown();
+        }
+
+
+
+
+
+
+    });
 
     // enter button
     $("#enterB").on("click", function () {
@@ -172,7 +190,7 @@ $(document).ready(function () {
 
             message = "You enter your home.\nYou see your bed. You can rest to restore your health to maximum."
 
-            $("body").css("background-image", "url('assets/images/house.jpg')");
+            $("body").css("background-image", "url('assets/images/building.jpg')");
 
             // change nav buttons
             $("#townM").show(); // show in town buttons
@@ -189,7 +207,6 @@ $(document).ready(function () {
         }
     });
 
-
     $("#leaveB").on("click", function () {
         console.log("leaveB clicked");
         message = "You leave.";
@@ -205,7 +222,6 @@ $(document).ready(function () {
 
         // update DOM
         $("#mainText").text(message);
-
 
 
     });
@@ -241,22 +257,89 @@ $(document).ready(function () {
     $("#runB").on("click", function () {
         console.log("runB clicked");
 
-        var rand = Math.floor(Math.random()*5);
+        var rand = Math.floor(Math.random() * 2);
 
 
         // TODO:  running chance to fail based on enemy you 
-        if(rand == 0){
-            message = "Oh no! You were unable to get away!"
+        if (rand == 0) {
+            message = "Oh no! You were unable to get away! "
+            takeDamage();
+
+            // update DOM
+            $("#mainText").text(message);
+            $("#playerCurHealth").text(playercurHp);
 
         }
-        else{
+        else {
+            message = "You ran away sucessfully! "
             endBattle();
         }
 
-        
+    });
+
+    $("#fghtB").on("click", function () {
+        console.log("fghtB clicked");
+
+        // attack
+        enemycurHp -= playerAttack;
+        message = "You dealt " + playerAttack + " damage to the " + enemyName + ". ";
+
+
+        // take damage
+        takeDamage();
+
+        // killed enemy
+        if (enemycurHp <= 0) {
+
+            // get stronger
+            enemycurHp = 0;
+            playerAttack++;
+            playercurHp++;
+            playerMaxHp += 2;
+
+            message += "You defeated the " + enemyName + ". You gained one attack power! You gained two hit points. ";
+            endBattle();
+
+
+        }
+
+
+
+        // update DOM
+        $("#mainText").text(message);
+        $("#playerCurHealth").text(playercurHp);
+        $("#enemyCurHealth").text(enemycurHp);
+
 
 
     });
+
+
+    function takeDamage() {
+
+        playercurHp -= enemyAttack;
+        message += "The " + enemyName + " attacked you for  " + enemyAttack + " damage. ";
+
+        // player died
+        if (playercurHp <= 0) {
+            console.log(" ### You Died ###")
+
+            playercurHp = 0;
+            message += "You got killed by the " + enemyName + ". ";
+            message += "You failed to get off the planet. Refresh page to try again.";
+
+            // update DOM
+            $("#playerBox").hide();
+            $("#battleM").hide();
+            $("#mainText").text(message);
+            $("#playerCurHealth").text(playercurHp);
+
+
+        }
+
+
+    }
+
 
     function inTown() {
 
@@ -264,6 +347,7 @@ $(document).ready(function () {
         if (xpos == 5 && ypos == 8) {
             message += "You have reached Mos Eisley. "
 
+            $("#mainText").text(message);
             $("#enterB").show(); // show the enter button
             return true;
 
@@ -274,6 +358,20 @@ $(document).ready(function () {
             $("#enterB").show();// show the enter button
         }
         else { // not by town
+
+            if (xpos < 5) {
+                message += "You are west of Mos Eisley. "
+            }
+            else if (xpos > 5) {
+                message += "You are east of Mos Eisley. "
+            }
+
+            if (ypos < 8) {
+                message += "You are south of Mos Eisley. "
+            }
+            else if (ypos > 8) {
+                message += "You are east of Mos Eisley. "
+            }
 
             $("#enterB").hide(); // hide button to enter if not by town or home
 
@@ -341,9 +439,9 @@ $(document).ready(function () {
         else if (roll >= 0 && roll <= 1000) { // spawns jawa (~10% chance)
             console.log("--Spawn Jawa");
 
-            enemyMaxHp = 50;
-            enemycurHp = 50;
-            enemyAttack = 4;
+            enemyMaxHp = 30;
+            enemycurHp = 30;
+            enemyAttack = 2;
             enemyName = "Jawa";
 
             // change enemy image
@@ -382,7 +480,7 @@ $(document).ready(function () {
         $("#battleM").show(); // show combat buttons
         $("#enemyBox").show(); // make enemy appear
 
-        message += "An Enemy appeared!"
+        message += "An Enemy appeared! "
 
         // update DOM
         $("#mainText").text(message);
@@ -396,14 +494,15 @@ $(document).ready(function () {
 
         inBattle = false;
 
-        message = "You ran away sucessfully!"
+
+        inTown();
 
         $("#mainText").text(message); // show text
+        $("#playerCurHealth").text(playercurHp); // show text
+        $("#playerMaxHealth").text(playerMaxHp); // show text
         $("#roadM").show(); // show travel buttons
         $("#battleM").hide(); // hide combat buttons
         $("#enemyBox").hide(); // make enemy disapper
-
-
 
     }
 
